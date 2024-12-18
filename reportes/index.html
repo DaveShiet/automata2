@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generar Reporte</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <h1>Generar Reporte de Ventas</h1>
+
+    <form action="generar_reporte.php" method="POST">
+        <label for="fecha">Seleccione el periodo:</label>
+        <select name="periodo" id="fecha">
+            <option value="dia">Día</option>
+            <option value="mes">Mes</option>
+            <option value="ano">Año</option>
+        </select>
+
+        <label for="usuario">Seleccione el empleado:</label>
+        <select name="usuario" id="usuario">
+            <option value="">Todos</option>
+            <!-- Aquí cargarás los usuarios desde la base de datos -->
+            <?php
+            // Conexión a la base de datos
+            include("conexion.php");
+            $sql = "SELECT ID_USER, NOM_USER, AP_USER FROM usuario";
+            $result = mysqli_query($conn, $sql);
+            while ($row = mysqli_fetch_assoc($result)) {
+                echo "<option value='" . $row['ID_USER'] . "'>" . $row['NOM_USER'] . " " . $row['AP_USER'] . "</option>";
+            }
+            ?>
+        </select>
+
+        <label for="fecha_inicio">Fecha:</label>
+        <input type="date" name="fecha_inicio" id="fecha_inicio">
+
+        <input type="submit" value="Generar Reporte">
+    </form>
+
+</body>
+</html>
